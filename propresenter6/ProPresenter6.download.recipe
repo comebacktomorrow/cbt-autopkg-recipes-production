@@ -5,7 +5,7 @@
 	<key>Comment</key>
 	<string>Generated based on keeleysam-recipes/SurteesStudios/Bartender.download.recipe</string>
 	<key>Description</key>
-	<string>Downloads the latest version of ProPresenter.</string>
+	<string>Downloads the latest version of ProPresenter 6.</string>
 	<key>Identifier</key>
 	<string>com.github.comebacktomorrow.download.ProPresenter</string>
 	<key>Input</key>
