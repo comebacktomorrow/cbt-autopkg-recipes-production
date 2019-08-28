@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest ProPresenter disk image and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.comebacktomorrow.pkg.ProPresenter</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>ProPresenter 6</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/renewedvision/propresenter6</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>ProPresenter is the definitive choice in live presentation and worship software for churches, schools, business presentations, and concerts</string>
+            <key>display_name</key>
+            <string>ProPresenter 6</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.comebacktomorrow.download.ProPresenter</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
