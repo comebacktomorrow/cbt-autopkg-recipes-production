@@ -10,8 +10,12 @@
     <dict>
         <key>NAME</key>
         <string>ProPresenter 6</string>
+		<key>MUNKI_CATEGORY</key>
+		<string>Video</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps/renewedvision/propresenter6</string>
+        <key>MUNKI_DEVELOPER</key>
+        <string>Renewed Vision</string>
         <key>pkginfo</key>
         <dict>
             <key>catalogs</key>
@@ -24,6 +28,10 @@
             <string>ProPresenter 6</string>
             <key>name</key>
             <string>%NAME%</string>
+            <key>developer</key>
+            <string>%MUNKI_DEVELOPER%</string>
+			<key>category</key>
+			<string>%MUNKI_CATEGORY%</string>
             <key>unattended_install</key>
             <true/>
         </dict>
