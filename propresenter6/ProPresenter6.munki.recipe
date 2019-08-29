@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest ProPresenter disk image and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.comebacktomorrow.munki.ProPresenter</string>
+    <string>com.github.comebacktomorrow.munki.ProPresenter6</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -32,6 +32,8 @@
             <string>%MUNKI_DEVELOPER%</string>
 			<key>category</key>
 			<string>%MUNKI_CATEGORY%</string>
+			<key>icon_name</key>
+			<string>%NAME%</string>
             <key>unattended_install</key>
             <true/>
         </dict>
@@ -39,7 +41,7 @@
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.comebacktomorrow.download.ProPresenter</string>
+    <string>com.github.comebacktomorrow.download.ProPresenter6</string>
     <key>Process</key>
     <array>
         <dict>
