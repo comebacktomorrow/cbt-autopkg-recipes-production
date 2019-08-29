@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads the latest ProPresenter disk image and imports into Munki.</string>
     <key>Identifier</key>
-    <string>com.github.comebacktomorrow.pkg.ProPresenter</string>
+    <string>com.github.comebacktomorrow.munki.ProPresenter</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
