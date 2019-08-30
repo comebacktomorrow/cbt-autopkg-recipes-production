@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the latest ProPresenter disk image and imports into Munki.</string>
+    <key>Identifier</key>
+    <string>com.github.comebacktomorrow.munki.SennheiserWSM</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Sennheiser WSM</string>
+		<key>MUNKI_CATEGORY</key>
+		<string>Audio</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/sennheiser/wsm</string>
+        <key>MUNKI_DEVELOPER</key>
+        <string>Sennheiser</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Sennheiser's Wireless Systems Manager is a professional software solution for remotely monitoring and controlling wireless systems.</string>
+            <key>display_name</key>
+            <string>Sennheiser WSM</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>developer</key>
+            <string>%MUNKI_DEVELOPER%</string>
+			<key>category</key>
+			<string>%MUNKI_CATEGORY%</string>
+			<key>icon_name</key>
+			<string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.comebacktomorrow.download.SennheiserWSM</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
