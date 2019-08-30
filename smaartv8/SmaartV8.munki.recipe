@@ -13,7 +13,7 @@
 		<key>APP_FILENAME</key>
 		<string>Smaart 8</string>
 		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/rationalacoustics/smaartv8/%NAME%</string>
+		<string>apps/rationalacoustics/smaartv8</string>
 		<key>NAME</key>
 		<string>Smaart</string>
 		<key>MUNKI_CATEGORY</key>
