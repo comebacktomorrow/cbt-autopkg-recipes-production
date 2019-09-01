@@ -76,7 +76,7 @@ Notably, REG_STATE and REG_COUNTRY must contain sane values:
             <key>Arguments</key>
             <dict>
                 <key>filename</key>
-                <string>%NAME%-%version%</string>
+                <string>%NAME%-%version%.zip</string>
             </dict>
         </dict>
         <dict>
