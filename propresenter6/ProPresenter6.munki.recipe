@@ -55,13 +55,27 @@
             <key>Processor</key>
             <string>Versioner</string>
         </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>info_path</key>
+				<string>%pathname%/ProPresenter 6.app/Contents/Info.plist</string>
+				<key>plist_keys</key>
+				<dict>
+					<key>CFBundleShortVersionString</key>
+					<string>shortversion</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>PlistReader</string>
+		</dict>
 	    <dict>
 			<key>Arguments</key>
 			<dict>
 				<key>additional_pkginfo</key>
 				<dict>
 					<key>version</key>
-					<string>%version%</string>
+					<string>%shortversion%.%version%</string>
 				</dict>
 			</dict>
 			<key>Processor</key>
