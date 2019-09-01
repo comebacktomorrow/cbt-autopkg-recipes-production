@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the most recent version of Synology Drive and imports it into Munki.
+
+</string>
+    <key>Identifier</key>
+    <string>om.github.comebacktomorrow.munki.synology_drive</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Synology Drive Client</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/synology/%NAME%</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Synology Drive Client desktop application is the desktop utility that provides file syncing and personal computer backup service on multiple client computers to a centralized server.</string>
+            <key>display_name</key>
+            <string>Synology Drive</string>
+			<key>developer</key>
+			<string>Synology</string>
+            <key>minimum_os_version</key>
+            <string>10.10.0</string>
+            <key>name</key>
+            <string>%NAME%</string>
+			<key>uninstallable</key>
+			            <true/>
+			            <key>uninstall_method</key>
+			            <string>uninstall_script</string>
+			            <key>uninstall_script</key>
+			            <string>#!/bin/sh
+			            # Run the uninstaller script provided with the app.
+			            UNINSTALL_SCRIPT="/Applications/Synology Drive Client.app/Contents/SharedSupport/Remove Synology Drive Client.app"
+
+			            [ -x "${UNINSTALL_SCRIPT}" ] || exit 1
+			            "${UNINSTALL_SCRIPT}"
+			            </string>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.9</string>
+    <key>ParentRecipe</key>
+    <string>com.github.comebacktomorrow.download.synology_drive</string>
+	<key>Process</key>
+	<array>
+	    <dict>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
+</dict>
+</plist>
