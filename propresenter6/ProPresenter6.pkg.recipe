@@ -5,14 +5,14 @@
     <key>Description</key>
     <string>Downloads latest ProPresenter 6 disk image and builds a package.</string>
     <key>Identifier</key>
-    <string>com.github.comebacktomorrow.pkg.ProPresenter</string>
+    <string>com.github.comebacktomorrow.pkg.ProPresenter6</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
         <string>ProPresenter 6</string>
     </dict>
     <key>ParentRecipe</key>
-    <string>com.github.comebacktomorrow.download.ProPresenter</string>
+    <string>com.github.comebacktomorrow.download.ProPresenter6</string>
     <key>Process</key>
     <array>
         <dict>
