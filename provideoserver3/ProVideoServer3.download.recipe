@@ -49,7 +49,7 @@
 		 			<string>%USER_AGENT%</string>
 		 		</dict>
 				<key>filename</key>
-				<string>%NAME%-%version%.dmg</string>
+				<string>%NAME%-%version%.app</string>
 		 	</dict>
 			<key>Processor</key>
 		 	<string>URLDownloader</string>
