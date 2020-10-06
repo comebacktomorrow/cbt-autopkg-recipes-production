@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>ProVideoServer-3</string>
+        <string>ProVideoServer</string>
     </dict>
     <key>ParentRecipe</key>
     <string>com.github.comebacktomorrow.download.ProVideoServer3</string>
