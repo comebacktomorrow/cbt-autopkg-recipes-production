@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #
 # Copyright 2014 Timothy Sutton
-#
+# With ammenedments from
+# https://github.com/autopkg/timsutton-recipes/blob/master/Blackmagic/BlackMagicURLProvider.py
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -17,13 +18,15 @@
 
 import json
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
+import operator
 
 from distutils.version import LooseVersion, StrictVersion
 from operator import itemgetter
 from pprint import pprint
+from functools import cmp_to_key
 
-from autopkglib import Processor, ProcessorError
+from autopkglib import Processor, ProcessorError, URLGetter
 
 __all__ = ["BlackMagicURLProvider"]
 
@@ -38,7 +41,10 @@ REQUIRED_REG_KEYS = [
     "country",
 ]
 
-class BlackMagicURLProvider(Processor):
+def cmp(a, b):
+        return (a > b) - (a < b)
+
+class BlackMagicURLProvider(URLGetter):
     """Provides a version and dmg download for the Barebones product given."""
     description = __doc__
     input_variables = {
@@ -94,14 +100,12 @@ class BlackMagicURLProvider(Processor):
 
     def get_downloads_metadata(self):
         '''Return a deserialized json object from the BM downloads metadata.'''
-        try:
-            metadata = urllib2.urlopen(DOWNLOADS_URL).read()
-            json_data = json.loads(metadata)
-            self.output("Loading metadata")
-            #self.output(json.dumps(json_data))
-        except urllib2.HTTPError, ValueError:
-            raise ProcessorError("Could not parse downloads metadata.")
+        metadata = self.download(DOWNLOADS_URL)
+        json_data = json.loads(metadata)
+        self.output("Loading metadata")
+        #self.output(json.dumps(json_data))
         return json_data
+
 
     def main(self):
         '''Find the download URL'''
@@ -146,13 +150,14 @@ class BlackMagicURLProvider(Processor):
                 # 'product_name_pattern'
                 p["version"] = version_string
                 prods.append(p)
-                
+            
+
         # sort by version and grab the highest one
         self.output("Sorting")
+
         latest_prod = sorted(
             prods,
-            key=itemgetter("version"),
-            cmp=compare_version)[-1]
+            key=lambda v:LooseVersion(v['version']))[-1]
         
         self.output("this is the data we are working with")
         #self.output(json.dumps(latest_prod)) #full data
@@ -202,15 +207,17 @@ class BlackMagicURLProvider(Processor):
         url = "https://www.blackmagicdesign.com/api/register/us/download/"
         url += str(download_id)
 
-        request = urllib2.Request(url, req_data)
-        request.add_header("Content-Type", "application/json;charset=UTF-8")
-        request.add_header("User-Agent", "Mozilla/5.0")
-        try:
-            result = urllib2.urlopen(request)
-            download_url = result.read()
-        except urllib2.HTTPError as exc:
-            raise ProcessorError(
-                "Could not get a download URL: %s" % exc)
+        headers = {
+            "Content-Type": "application/json;charset=UTF-8",
+            "User-Agent": "Mozilla/5.0"
+        }
+        
+        curl_cmd = self.prepare_curl_cmd()
+        self.add_curl_headers(curl_cmd, headers)
+        curl_cmd.append('--data')
+        curl_cmd.append(req_data)
+        curl_cmd.append(url)
+        download_url = self.download_with_curl(curl_cmd)
 
         self.env["version"] = latest_prod["version"]
         self.env["url"] = download_url
