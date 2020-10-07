@@ -15,19 +15,19 @@
 
 import json
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 from distutils.version import LooseVersion, StrictVersion
 from operator import itemgetter
 from pprint import pprint
 
-from autopkglib import Processor, ProcessorError
+from autopkglib import Processor, ProcessorError, URLGetter
 
 __all__ = ["SynologyURLProvider"]
 
 DOWNLOADS_URL = "https://www.synology.com/api/support/findDownloadInfo?lang=en-global&product=RS2416%2B"
 
-class SynologyURLProvider(Processor):
+class SynologyURLProvider(URLGetter):
     """Provides a version and dmg download for the Barebones product given."""
     description = __doc__
     input_variables = {
@@ -41,13 +41,10 @@ class SynologyURLProvider(Processor):
 
     def get_downloads_metadata(self):
         '''Return a deserialized json object from the BM downloads metadata.'''
-        try:
-            metadata = urllib2.urlopen(DOWNLOADS_URL).read()
-            json_data = json.loads(metadata)
-            self.output("Loading metadata")
-            #self.output(json.dumps(json_data))
-        except urllib2.HTTPError, ValueError:
-            raise ProcessorError("Could not parse downloads metadata.")
+        metadata = self.download(DOWNLOADS_URL)
+        json_data = json.loads(metadata)
+        self.output("Loading metadata")
+        #self.output(json.dumps(json_data))
         return json_data
 
     def main(self):
