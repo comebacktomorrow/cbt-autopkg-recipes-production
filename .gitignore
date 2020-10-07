@@ -1,2 +1,4 @@
 .DS_Store
 blackmagicdesign/desktopvideo/BlackMagicURLProvider.pyc
+*.pyc
+*.bak

@@ -1,8 +1,7 @@
-#!/usr/bin/python
+#!/usr/local/autopkg/python
 #
 # Copyright 2014 Timothy Sutton
-# With ammenedments from
-# https://github.com/autopkg/timsutton-recipes/blob/master/Blackmagic/BlackMagicURLProvider.py
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -16,17 +15,15 @@
 # limitations under the License.
 """See docstring for BlackMagicURLProvider class"""
 
+
+
 import json
 import re
-import urllib.request, urllib.error, urllib.parse
-import operator
-
-from distutils.version import LooseVersion, StrictVersion
+from autopkglib.URLGetter import URLGetter
+from distutils.version import LooseVersion
 from operator import itemgetter
-from pprint import pprint
-from functools import cmp_to_key
 
-from autopkglib import Processor, ProcessorError, URLGetter
+from autopkglib import Processor, ProcessorError
 
 __all__ = ["BlackMagicURLProvider"]
 
@@ -40,9 +37,6 @@ REQUIRED_REG_KEYS = [
     "state",
     "country",
 ]
-
-def cmp(a, b):
-        return (a > b) - (a < b)
 
 class BlackMagicURLProvider(URLGetter):
     """Provides a version and dmg download for the Barebones product given."""
@@ -100,12 +94,9 @@ class BlackMagicURLProvider(URLGetter):
 
     def get_downloads_metadata(self):
         '''Return a deserialized json object from the BM downloads metadata.'''
-        metadata = self.download(DOWNLOADS_URL)
+        metadata = self.download(DOWNLOADS_URL, text=True)
         json_data = json.loads(metadata)
-        self.output("Loading metadata")
-        #self.output(json.dumps(json_data))
         return json_data
-
 
     def main(self):
         '''Find the download URL'''
@@ -124,56 +115,32 @@ class BlackMagicURLProvider(URLGetter):
         self.output("Filtering json 'name' attributes with regex %s" %
                         self.env["product_name_pattern"])
         prods = []
-        
-        #self.output(json.dumps(metadata["downloads"]))
-        
         for m_prod in metadata["downloads"]:
-                
-            #match = re.search(self.env["product_name_pattern"], m_prod["name"])
-            match = re.search(self.env["product_name_pattern"], m_prod["name"])
-            #self.output("Attempting to match        " + m_prod["name"])
-            #self.output(match)
+
+            match = re.match(self.env["product_name_pattern"], m_prod["name"])
             if match:
-                self.output("Found match        " + m_prod["name"])
-                major = m_prod["urls"]["Mac OS X"][0]["major"]
-                minor = m_prod["urls"]["Mac OS X"][0]["minor"]
-                releaseNum = m_prod["urls"]["Mac OS X"][0]["releaseNum"]
-                version_string = str(major) + "." + str(minor) + "." + str(releaseNum)
-                self.output("Version String is " + version_string)
-                
-                if not major and minor and releaseNum:
+                if not match.group("version"):
                     self.output("WARNING: Regex matched but no "
                                 "named group 'version' matched!")
                 p = m_prod.copy()
-                
                 # recording the version extracted by our named group in
                 # 'product_name_pattern'
-                p["version"] = version_string
+                p["version"] = match.group("version")
                 prods.append(p)
-            
-
         # sort by version and grab the highest one
-        self.output("Sorting")
-
         latest_prod = sorted(
             prods,
             key=lambda v:LooseVersion(v['version']))[-1]
-        
-        self.output("this is the data we are working with")
-        #self.output(json.dumps(latest_prod)) #full data
-        self.output(json.dumps(latest_prod["urls"]["Mac OS X"][0])) #partial data
-        
-        self.output("Checking for download id")
+
         # ensure our product contains info we need
         try:
             download_id = latest_prod["urls"]["Mac OS X"][0]["downloadId"]
             desc = latest_prod["desc"]
-            self.output("DownloadId is " + download_id)
         except KeyError:
             raise ProcessorError("Metadata for product is missing at the "
                                  "expected location in feed.")
 
-        self.output("Building JSON request")
+
         # now build a request JSON to finally ask for the download URL
         req_data = {
             "country": "us",
@@ -183,9 +150,6 @@ class BlackMagicURLProvider(URLGetter):
             }
         }
 
-        self.output("JSON request is build")
-        self.output("Request Registration " + str(latest_prod["requiresRegistration"]))
-        
         # if this download needs registration, or we want to register
         # otherwise, ensure we've set everything
         if latest_prod["requiresRegistration"]:
@@ -211,7 +175,7 @@ class BlackMagicURLProvider(URLGetter):
             "Content-Type": "application/json;charset=UTF-8",
             "User-Agent": "Mozilla/5.0"
         }
-        
+
         curl_cmd = self.prepare_curl_cmd()
         self.add_curl_headers(curl_cmd, headers)
         curl_cmd.append('--data')
