@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads and installs the latest version of ProPresenter 6</string>
     <key>Identifier</key>
-    <string>com.github.comebacktomorrow.install.SmaartV</string>
+    <string>com.github.comebacktomorrow.install.SmaartV8</string>
     <key>Input</key>
     <dict/>
     <key>MinimumVersion</key>
