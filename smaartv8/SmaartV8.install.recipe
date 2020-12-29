@@ -25,7 +25,7 @@
                 <array>
                     <dict>
                         <key>source_item</key>
-                        <string>ProPresenter 6.app</string>
+                        <string>Smaart 8.app</string>
                         <key>destination_path</key>
                         <string>/Applications/</string>
                     </dict>
