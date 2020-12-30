@@ -117,5 +117,5 @@ class SynologyURLProvider(URLGetter):
 
 
 if __name__ == "__main__":
-    PROCESSOR = BlackMagicURLProvider()
+    PROCESSOR = SynologyURLProvider()
     PROCESSOR.execute_shell()
