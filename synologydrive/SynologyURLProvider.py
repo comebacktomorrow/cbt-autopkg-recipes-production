@@ -66,11 +66,13 @@ class SynologyURLProvider(URLGetter):
         #self.output(json.dumps(metadata["info"]["utilities"]))
         self.output("Searching")
         
-        for m_prod in metadata["info"]["utilities"]:
-            self.output(m_prod)
+        for m_prod in metadata["info"]["utilities"][0]["items"]:
+            #self.output("Entering the loop")
+            #self.output(m_prod)
             
             search_string = "Synology Drive Client"
-            #match = re.search(self.env["product_name_pattern"], m_prod["name"])
+            #self.output("Setting up search")
+            ##match = re.search(self.env["product_name_pattern"], m_prod["name"])
             match = re.search(search_string, m_prod["dname"])
             self.output("Attempting to match        " + m_prod["dname"])
             self.output(match)
