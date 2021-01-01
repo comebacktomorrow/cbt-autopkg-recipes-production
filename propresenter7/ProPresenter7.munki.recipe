@@ -34,58 +34,40 @@
 			<string>%MUNKI_CATEGORY%</string>
 			<key>icon_name</key>
 			<string>%NAME%</string>
+            <key>minimum_os_version</key>
+			<string>10.12</string>
             <key>unattended_install</key>
             <true/>
-        </dict>
-    </dict>
+            <key>unattended_uninstall</key>
+			<true/>
+			<key>uninstall_method</key>
+			<string>uninstall_script</string>
+			<key>uninstall_script</key>
+			<string>#!/bin/bash
+
+if [[ -f "/Library/LaunchDaemons/com.renewedvision.InstallHelper.plist" ]]; then
+    launchctl unload -w "/Library/LaunchDaemons/com.renewedvision.InstallHelper.plist" 2&gt;/dev/null
+    rm -rf "/Library/LaunchDaemons/com.renewedvision.InstallHelper.plist"
+fi
+
+rm -rf "/Applications/ProPresenter.app"
+rm -rf "/Library/PrivilegedHelperTools/com.renewedvision.InstallHelper"
+</string>
+			<key>uninstallable</key>
+			<true/>
+		</dict>
+	</dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.comebacktomorrow.download.ProPresenter7</string>
+    <string>com.github.comebacktomorrow.pkg.ProPresenter7</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>input_plist_path</key>
-                <string>%pathname%/ProPresenter.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleVersion</string>
-            </dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-        </dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>info_path</key>
-				<string>%pathname%/ProPresenter.app/Contents/Info.plist</string>
-				<key>plist_keys</key>
-				<dict>
-					<key>CFBundleShortVersionString</key>
-					<string>shortversion</string>
-				</dict>
-			</dict>
-			<key>Processor</key>
-			<string>PlistReader</string>
-		</dict>
-	    <dict>
-			<key>Arguments</key>
-			<dict>
-				<key>additional_pkginfo</key>
-				<dict>
-					<key>version</key>
-					<string>%shortversion%.%version%</string>
-				</dict>
-			</dict>
-			<key>Processor</key>
-			<string>MunkiPkginfoMerger</string>
-		</dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>pkg_path</key>
-                <string>%pathname%</string>
+                <string>%pkg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
 				<key>version_comparison_key</key>
