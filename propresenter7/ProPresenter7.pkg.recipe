@@ -10,20 +10,13 @@
     <dict>
         <key>NAME</key>
         <string>ProPresenter 7</string>
+        <key>INSTALLERSCRIPTS</key>
+        <string>Scripts</string>
     </dict>
     <key>ParentRecipe</key>
     <string>com.github.comebacktomorrow.download.ProPresenter7</string>
     <key>Process</key>
     <array>
-        <dict>
-            <key>Processor</key>
-            <string>AppDmgVersioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>dmg_path</key>
-                <string>%pathname%</string>
-            </dict>
-        </dict>
         <dict>
             <key>Processor</key>
             <string>PkgRootCreator</string>
@@ -40,13 +33,15 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Copier</string>
+            <string>Unarchiver</string>
             <key>Arguments</key>
             <dict>
-                <key>source_path</key>
-                <string>%pathname%/%app_name%</string>
+                <key>archive_path</key>
+                <string>%pathname%</string>
                 <key>destination_path</key>
                 <string>%pkgroot%/Applications/%app_name%</string>
+                <key>purge_destination</key>
+                <true/>
             </dict>
         </dict>
         <dict>
@@ -61,9 +56,11 @@
                     <key>version</key>
                     <string>%version%</string>
                     <key>id</key>
-                    <string>%bundleid%</string>
+                    <string>com.renewedvision.propresenter</string>
                     <key>options</key>
                     <string>purge_ds_store</string>
+                    <key>scripts</key>
+                    <string>%INSTALLERSCRIPTS%</string>
                     <key>chown</key>
                     <array>
                         <dict>
