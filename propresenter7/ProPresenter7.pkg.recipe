@@ -61,6 +61,18 @@
             </dict>
         </dict>
         <dict>
+			<key>Arguments</key>
+			<dict>
+				<key>additional_pkginfo</key>
+				<dict>
+					<key>version</key>
+					<string>%version%</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+		</dict>
+        <dict>
             <key>Processor</key>
             <string>PkgCreator</string>
             <key>Arguments</key>
@@ -73,6 +85,10 @@
                     <string>%version%</string>
                     <key>id</key>
                     <string>%bundleid%</string>
+                    <key>version_comparison_key</key>
+				    <string>CFBundleVersion</string>
+                    <key>path</key>
+			        <string>/Applications/ProPresenter 6.app</string>
                     <key>options</key>
                     <string>purge_ds_store</string>
                     <key>scripts</key>
