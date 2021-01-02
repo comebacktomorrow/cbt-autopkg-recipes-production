@@ -11,7 +11,7 @@
     <key>Input</key>
     <dict>
         <key>PRODUCT_NAME_PATTERN</key>
-        <string>(Desktop Video)(\s)(\d+\.\d+\.*\d*)$</string>
+        <string>^Desktop Video\s(?P&lt;version&gt;\d+\.\d+\.+\d+)$</string>
         <key>NAME</key>
         <string>Desktop Video</string>
         <key>REG_FIRSTNAME</key>
