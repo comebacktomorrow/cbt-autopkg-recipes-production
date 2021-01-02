@@ -64,6 +64,26 @@ rm -rf "/Library/PrivilegedHelperTools/com.renewedvision.InstallHelper"
     <key>Process</key>
     <array>
         <dict>
+			<key>Arguments</key>
+			<dict>
+				<key>faux_root</key>
+				<string>%RECIPE_CACHE_DIR%</string>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Applications/%NAME%.app</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+			</dict>
+		</dict>
+        <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
