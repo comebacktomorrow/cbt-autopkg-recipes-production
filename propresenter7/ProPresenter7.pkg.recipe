@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>ProPresenter 7</string>
+        <string>ProPresenter</string>
         <key>INSTALLERSCRIPTS</key>
         <string>Scripts</string>
     </dict>
@@ -33,13 +33,13 @@
         </dict>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
+            <string>Copier</string>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
+                <key>source_path</key>
                 <string>%pathname%</string>
                 <key>destination_path</key>
-                <string>%pkgroot%/Applications/%app_name%</string>
+                <string>%pkgroot%/Applications</string>
                 <key>purge_destination</key>
                 <true/>
             </dict>
